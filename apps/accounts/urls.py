@@ -12,6 +12,5 @@ urlpatterns = [
     path('account-activation-sent/', views.account_activation_sent, name='account_activation_sent'),
     path('activate/<uidb64>/<token>/',views.activate, name='activate'),
     path('account-activated/', views.account_activated, name='account_activated'),
-    path('account-activation-failed/', views.activation_failed, name='account_activation_failed'),
-    path('', views.index, name='index')
+    path('account-activation-failed/', views.activation_failed, name='account_activation_failed')
 ]
