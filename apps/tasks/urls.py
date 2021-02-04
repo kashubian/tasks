@@ -3,5 +3,6 @@ from . import views
 
 app_name = 'tasks'
 urlpatterns = [
-    path('', views.tasks, name='tasks')
+    path('', views.TasksListView.as_view(), name='tasks'),
+    path('<uuid:pk>/', views.TaskDetailView.as_view(), name='task')
 ]
