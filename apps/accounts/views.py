@@ -56,6 +56,3 @@ def activate(request, uidb64, token):
     else:
         return render(request, 'account_activation_failed.html')
     
-
-def index(request):
-    return render(request, "base.html")
