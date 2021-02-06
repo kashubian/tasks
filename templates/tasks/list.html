@@ -10,6 +10,16 @@
     class="list-group-item list-group-item-action">
 
     {{task.date}} {{task.title}}
+
+    <object>
+        <a href="{% url 'tasks:delete_task' task.pk %}" role="button" class="btn btn-warning float-right">
+            Delete
+        </a>
+        <a href="{% url 'tasks:update_task' task.pk %}" role="button" class="btn btn-secondary float-right mr-3">
+            Update
+        </a>
+    </object>
+
     
     </a>
 

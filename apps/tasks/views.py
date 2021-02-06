@@ -43,8 +43,19 @@ class TaskCreateView(generic.edit.CreateView):
 
 
 class TaskUpdateView(generic.edit.UpdateView):
-    pass
+    
+    model = Task
+    form_class = TaskCreateForm
+    template_name = 'tasks/update.html'
+
+    def get_success_url(self):
+        return reverse('tasks:task', kwargs={"pk": self.object.id})
 
 
 class TaskDeleteView(generic.edit.DeleteView):
-    pass
+    
+    model = Task
+    template_name = 'tasks/delete.html'
+
+    def get_success_url(self):
+        return reverse('tasks:tasks')
