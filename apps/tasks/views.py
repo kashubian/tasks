@@ -1,6 +1,8 @@
 from django.views import generic
-from django.shortcuts import reverse
+from django.shortcuts import reverse, redirect
 from django.contrib.auth.mixins import LoginRequiredMixin
+from django.template.loader import render_to_string
+from datetime import timedelta, datetime
 
 from .models import Task
 from .forms import TaskCreateForm
@@ -59,3 +61,26 @@ class TaskDeleteView(generic.edit.DeleteView):
 
     def get_success_url(self):
         return reverse('tasks:tasks')
+
+# remainder email is sent when it's less than 24 hours to the task's date
+def send_remainders(request):
+    tasks = Task.objects.all()
+    time_now = datetime.now()
+
+    for task in tasks:
+
+        if (task.date < datetime.now() + timedelta(hours=24) 
+            and task.sent_remainder == False):
+            
+            subject = task.title
+            message = render_to_string('tasks/remainder_email.html',
+                {
+                'date': task.date,
+                'description': task.description,
+            })
+            from_email = 'tasks@remainders.com'
+            task.user.email_user(subject, message, from_email)
+            task.sent_remainder = True
+            task.save()
+
+    return redirect('/')
