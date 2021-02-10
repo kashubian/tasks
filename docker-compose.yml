@@ -12,3 +12,10 @@ services:
       - ./project:/code
     ports:
       - "8000:8000"
+  
+  workers:
+    container_name: workers
+    build:
+      context: ./project
+      dockerfile: Dockerfile
+    command: python manage.py runworkers
