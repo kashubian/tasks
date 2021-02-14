@@ -1,0 +1,21 @@
+version: '3'
+
+services:
+
+  project:
+    container_name: project
+    build: 
+      context: ./project
+      dockerfile: Dockerfile
+    command: python manage.py runserver 0.0.0.0:8000
+    volumes:
+      - ./project:/code
+    ports:
+      - "8000:8000"
+  
+  workers:
+    container_name: workers
+    build:
+      context: ./project
+      dockerfile: Dockerfile
+    command: python manage.py runworkers

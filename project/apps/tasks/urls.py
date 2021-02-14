@@ -7,5 +7,6 @@ urlpatterns = [
     path('<uuid:pk>/', views.TaskDetailView.as_view(), name='task'),
     path('add-task/', views.TaskCreateView.as_view(), name='add_task'),
     path('<uuid:pk>/update/', views.TaskUpdateView.as_view(), name='update_task'),
-    path('<uuid:pk>/delete/', views.TaskDeleteView.as_view(), name='delete_task')
+    path('<uuid:pk>/delete/', views.TaskDeleteView.as_view(), name='delete_task'),
+    path('send-remainders/', views.send_remainders, name='send_remainders')
 ]
