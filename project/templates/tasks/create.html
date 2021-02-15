@@ -5,11 +5,42 @@
   
 <form method="POST">
     {% csrf_token %}
-    {{form|crispy}}
     
+    {{form.title|as_crispy_field}}
+    {{form.description|as_crispy_field}}
+
+    {{form.date|as_crispy_field}}
+    <div class="form-group">
+        <input type="checkbox" name="" id="custom-date-reminder" onclick="custom_date()">
+        <label for="custom-date-reminder" id="custom-date-reminder">
+            Select to set custom remind time.
+            Otherwise reminder will be sent 24 hours before tasks date.
+        </label>
+    </div>
+
+    <div hidden=true id="remind-date">
+        {{form.remind_at|as_crispy_field}}
+    </div>
+
     <button class="btn btn-success" type="submit">Add</button>
     <a href="{{request.META.HTTP_REFERER}}" role="button" class="btn btn-primary">Back</a>
 </form>
 
+<script>
+    function custom_date() {
+        var x = document.getElementById("remind-date");
+        if (x.hidden === true) {
+            x.hidden = false;
+        } 
+        else {
+            x.hidden = true;
+        }
+    }
+</script>
 
+<style>
+    #custom-date-reminder {
+        color: orange;
+    }
+</style>
 {% endblock content %}

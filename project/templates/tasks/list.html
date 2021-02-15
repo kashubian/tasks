@@ -9,7 +9,7 @@
     href="{% url 'tasks:task' task.pk %}" 
     class="list-group-item list-group-item-action">
 
-    {{task.date}} {{task.title}}
+    {{task.date}} {{task.title}}  send reminder at {{task.remind_at}}
 
     <object>
         <a href="{% url 'tasks:delete_task' task.pk %}" role="button" class="btn btn-warning float-right">

@@ -6,20 +6,19 @@ from django.template.loader import render_to_string
 
 @task(schedule=60*60)
 def send_reminders():
-    tasks = Task.objects.filter(sent_remainder=False)
-    time_now = datetime.now()
+    tasks = Task.objects.filter(sent_reminder=False)
 
     for task in tasks:
 
-        if task.date < datetime.now() + timedelta(hours=24):
+        if task.remind_at < datetime.now():
             
             subject = task.title
-            message = render_to_string('tasks/remainder_email.html',
+            message = render_to_string('tasks/reminder_email.html',
                 {
                 'date': task.date,
                 'description': task.description,
             })
-            from_email = 'tasks@remainders.com'
+            from_email = 'noreply@reminders.com'
             task.user.email_user(subject, message, from_email)
-            task.sent_remainder = True
+            task.sent_reminder = True
             task.save()

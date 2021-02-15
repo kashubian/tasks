@@ -12,12 +12,22 @@ class TaskCreateForm(forms.ModelForm):
             },
         format='%Y-%m-%dT%H:%M')
         )
-
+    remind_at = forms.DateTimeField(
+        required=False,
+        input_formats = ['%Y-%m-%dT%H:%M'], 
+        widget = forms.DateTimeInput(
+        attrs={
+            'type': 'datetime-local',
+            'class': 'form-control'
+            },
+        format='%Y-%m-%dT%H:%M')
+        )
     class Meta:
         model = Task
         fields = [
             'title',
             'description',
-            'date'
+            'date',
+            'remind_at'
         ]
         
