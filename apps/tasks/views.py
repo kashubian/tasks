@@ -62,25 +62,25 @@ class TaskDeleteView(generic.edit.DeleteView):
     def get_success_url(self):
         return reverse('tasks:tasks')
 
-# remainder email is sent when it's less than 24 hours to the task's date
-def send_remainders(request):
+# reminders email is sent when it's less than 24 hours to the task's date
+def send_reminders(request):
     tasks = Task.objects.all()
     time_now = datetime.now()
 
     for task in tasks:
 
         if (task.date < datetime.now() + timedelta(hours=24) 
-            and task.sent_remainder == False):
+            and task.sent_reminder == False):
             
             subject = task.title
-            message = render_to_string('tasks/remainder_email.html',
+            message = render_to_string('tasks/reminder_email.html',
                 {
                 'date': task.date,
                 'description': task.description,
             })
-            from_email = 'tasks@remainders.com'
+            from_email = 'tasks@reminders.com'
             task.user.email_user(subject, message, from_email)
-            task.sent_remainder = True
+            task.sent_reminder = True
             task.save()
 
     return redirect('/')
